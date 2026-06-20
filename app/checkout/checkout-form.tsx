@@ -60,18 +60,8 @@ export default function CheckoutForm() {
     return acc + ((originalPrice - item.price) * item.quantity);
   }, 0);
 
-  const formatPhone = (value: string) => {
-    const numbers = value.replace(/\D/g, '');
-    if (numbers.length <= 2) return `(${numbers}`;
-    if (numbers.length <= 7) return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
-    return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`;
-  };
-
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatPhone(e.target.value);
-    if (formatted.replace(/\D/g, '').length <= 11) {
-      setPhone(formatted);
-    }
+    setPhone(e.target.value);
   };
 
   // Função para scroll suave até o formulário de endereço
@@ -348,14 +338,10 @@ export default function CheckoutForm() {
     return { ok: true };
   };
 
-  // Validação de telefone real
+  // Validação de telefone - aceita qualquer formato
   const isValidPhone = (val: string): boolean => {
     const clean = val.replace(/\D/g, '');
-    if (clean.length < 10 || clean.length > 11) return false;
-    const ddd = parseInt(clean.substring(0, 2));
-    if (ddd < 11 || ddd > 99) return false;
-    if (clean.length === 11 && clean.charAt(2) !== '9') return false;
-    return true;
+    return clean.length >= 8;
   };
 
   const handleContinue = () => {
@@ -368,7 +354,7 @@ export default function CheckoutForm() {
       }
       // Validar telefone real
       if (!isValidPhone(phone)) {
-        toast.error('Telefone inválido. Use DDD + número (ex: 11 99999-9999)');
+        toast.error('Telefone inválido. Digite pelo menos 8 números.');
         return;
       }
       if (!address.trim()) {
