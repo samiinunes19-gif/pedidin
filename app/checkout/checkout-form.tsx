@@ -277,6 +277,7 @@ export default function CheckoutForm() {
           amount: finalTotal,
           customerName: name,
           customerCpf: cpf,
+          customerPhone: phone,
           items: items.map(item => ({
             title: item.name,
             unitPrice: item.price,

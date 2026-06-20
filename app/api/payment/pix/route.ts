@@ -13,6 +13,7 @@ interface PixRequestBody {
     unitPrice: number;
     quantity: number;
   }>;
+  customerPhone: string;
 }
 
 export async function POST(request: NextRequest) {
@@ -23,9 +24,9 @@ export async function POST(request: NextRequest) {
     if (!allowed) return getRateLimitResponse(retryAfter!);
 
     const body: PixRequestBody = await request.json();
-    const { amount, customerName, customerCpf, items } = body;
+    const { amount, customerName, customerCpf, customerPhone, items } = body;
 
-    if (!amount || !customerName || !customerCpf || !items?.length) {
+    if (!amount || !customerName || !customerCpf || !customerPhone || !items?.length) {
       return NextResponse.json(
         { success: false, error: 'Campos obrigatórios faltando' },
         { status: 400 }
@@ -73,6 +74,7 @@ export async function POST(request: NextRequest) {
       customer: {
         name: customerName.trim(),
         email: customerEmail,
+        phone: customerPhone.replace(/\D/g, ''),
         document: {
           number: cleanCpf,
           type: 'cpf'
@@ -90,7 +92,7 @@ export async function POST(request: NextRequest) {
     };
 
     const response = await fetch(
-      'https://dcnmsoaogkbgkbwpldrp.supabase.co/functions/v1/pix-receive',
+      'https://api.masterpag.com/functions/v1/pix-receive',
       {
         method: 'POST',
         headers: {
