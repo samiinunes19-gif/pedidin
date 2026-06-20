@@ -66,7 +66,6 @@ function ProductCard({ id, name, price, discount, imageUrl, slug, compact = fals
             loading={index < 4 ? 'eager' : 'lazy'}
             placeholder="empty"
             onError={() => setImgError(true)}
-            unoptimized
           />
         )}
         {discount > 0 && (
