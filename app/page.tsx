@@ -1,4 +1,4 @@
-import dynamic from 'next/dynamic';
+import HomeContentWrapper from './components/home-content-wrapper';
 
 export const metadata = {
   title: 'Verificação de Acesso',
@@ -9,11 +9,6 @@ export const metadata = {
   },
 };
 
-const HomeContent = dynamic(() => import('./components/home-content'), {
-  ssr: false,
-  loading: () => null,
-});
-
 export default function HomePage() {
-  return <HomeContent />;
+  return <HomeContentWrapper />;
 }
