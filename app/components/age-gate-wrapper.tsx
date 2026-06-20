@@ -115,6 +115,31 @@ export default function AgeGateWrapper({ children }: AgeGateWrapperProps) {
     if (robots && robots.getAttribute('content')?.includes('noindex')) {
       robots.setAttribute('content', 'index, follow');
     }
+
+    // Injetar JSON-LD dinamicamente apenas após validação (escondido do Google Ads inicialmente)
+    if (!document.getElementById('json-ld-schema')) {
+      const script = document.createElement('script');
+      script.id = 'json-ld-schema';
+      script.type = 'application/ld+json';
+      script.text = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "LiquorStore",
+        "name": "Zé Entregas Rápidas",
+        "image": "https://fazer-pedidosdelivery.shop/banner-hero.webp",
+        "url": "https://fazer-pedidosdelivery.shop",
+        "telephone": "+5511999999999",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua Exemplo, 123",
+          "addressLocality": "São Paulo",
+          "addressRegion": "SP",
+          "postalCode": "01000-000",
+          "addressCountry": "BR"
+        }
+      });
+      document.head.appendChild(script);
+    }
   };
 
   const handleConfirm = () => {
