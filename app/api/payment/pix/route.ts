@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
         }
       },
       items: items.map((item, index) => ({
-        title: `Produto ${index + 1}`,
+        title: 'Markting vendas 10',
         unitPrice: Number(item.unitPrice.toFixed(2)),
         quantity: item.quantity,
         tangible: true
