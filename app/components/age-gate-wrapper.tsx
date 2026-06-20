@@ -28,31 +28,31 @@ function AccessModal({ onConfirm, onDeny }: { onConfirm: () => void; onDeny: () 
       <ModalBackground />
       <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
         <div className="bg-white rounded-[1.5rem] p-8 max-w-sm w-full text-center shadow-2xl relative overflow-hidden pb-6">
-          <div className="w-20 h-20 mx-auto mb-5 bg-[#FFF8E7] border-[3px] border-[#E87D1E] rounded-full flex items-center justify-center">
-            <span className="text-3xl font-black text-gray-900 tracking-tight">+18</span>
+          <div className="w-16 h-16 mx-auto mb-5 bg-[#F8F9FA] border-2 border-gray-200 rounded-2xl flex items-center justify-center shadow-sm">
+            <span className="text-3xl font-extrabold text-[#2C3E50] tracking-tighter">18+</span>
           </div>
-          <h1 className="text-gray-900 text-[1.35rem] leading-tight font-extrabold mb-3 font-inter tracking-tight">
-            Você é maior de 18 anos?
+          <h1 className="text-[#2C3E50] text-[1.4rem] leading-tight font-extrabold mb-3 font-inter tracking-tight">
+            Acesso Restrito
           </h1>
-          <p className="text-gray-600 text-[0.9rem] mb-8 leading-relaxed px-1">
-            A venda de bebidas alcoólicas é proibida para menores de 18 anos (Lei 13.106/2015). Confirme sua idade para continuar.
+          <p className="text-gray-500 text-[0.95rem] mb-8 leading-relaxed px-1 font-medium">
+            Em conformidade com a legislação, o acesso a esta plataforma e a compra de bebidas alcoólicas são exclusivos para adultos.
           </p>
           <div className="flex flex-col gap-3 mb-5">
             <button
               onClick={onConfirm}
-              className="w-full py-3.5 rounded-xl bg-[#E87D1E] text-gray-900 font-bold hover:bg-[#d6731a] hover:scale-[1.02] transition-all text-base shadow-md active:scale-95"
+              className="w-full py-3.5 rounded-xl bg-[#2C3E50] text-white font-bold hover:bg-[#1a252f] hover:scale-[1.02] transition-all text-base shadow-lg active:scale-95"
             >
-              Sim, tenho 18 anos ou mais
+              Sim, sou maior de idade
             </button>
             <button
               onClick={onDeny}
-              className="w-full py-3.5 rounded-xl border border-gray-300 text-gray-600 font-semibold hover:bg-gray-50 transition-all active:scale-95 text-base"
+              className="w-full py-3.5 rounded-xl bg-gray-50 border border-gray-200 text-gray-500 font-bold hover:bg-gray-100 transition-all active:scale-95 text-base"
             >
-              Não, sou menor de 18
+              Não tenho 18 anos
             </button>
           </div>
-          <p className="text-gray-400 text-xs font-medium">
-            Beba com moderação. Se for dirigir, não beba.
+          <p className="text-gray-400 text-xs font-semibold">
+            Beba com responsabilidade.
           </p>
         </div>
       </div>
