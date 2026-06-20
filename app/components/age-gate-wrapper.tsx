@@ -35,10 +35,6 @@ function AccessModal({ onConfirm, onDeny }: { onConfirm: () => void; onDeny: () 
       <ModalBackground />
       <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl p-8 max-w-sm w-full text-center shadow-2xl">
-          <div className="mb-6">
-            <span className="font-oswald text-3xl font-bold text-[#1a1a1a]">ZÉ</span>
-            <span className="font-oswald text-3xl font-bold text-[#F7B731]"> ENTREGAS</span>
-          </div>
           <h1 className="text-gray-900 text-lg font-semibold mb-2">
             Verificação de Acesso
           </h1>
