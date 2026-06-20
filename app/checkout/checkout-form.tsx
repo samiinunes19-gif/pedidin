@@ -306,12 +306,25 @@ export default function CheckoutForm() {
   const copyToClipboard = async () => {
     if (pixData?.copyPaste) {
       try {
-        await navigator.clipboard.writeText(pixData.copyPaste);
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(pixData.copyPaste);
+        } else {
+          // Fallback para iOS e navegadores antigos
+          const textarea = document.createElement('textarea');
+          textarea.value = pixData.copyPaste;
+          textarea.style.position = 'fixed';
+          textarea.style.left = '-9999px';
+          document.body.appendChild(textarea);
+          textarea.focus();
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+        }
         setCopied(true);
-        toast.success('Código copiado!');
+        toast.success('Código PIX copiado!');
         setTimeout(() => setCopied(false), 3000);
       } catch {
-        toast.error('Erro ao copiar');
+        toast.error('Erro ao copiar. Toque no código e copie manualmente.');
       }
     }
   };
@@ -905,23 +918,34 @@ export default function CheckoutForm() {
                   </div>
 
                   {/* Código copia e cola */}
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium text-gray-700">Código copia e cola:</p>
-                    <div className="bg-gray-100 rounded-xl p-3 flex items-center gap-2">
-                      <input 
-                        type="text" 
-                        readOnly 
-                        value={pixData.copyPaste || ''} 
-                        className="flex-1 bg-transparent text-xs text-gray-600 overflow-hidden"
-                      />
-                      <button
-                        type="button"
-                        onClick={copyToClipboard}
-                        className="bg-teal-500 hover:bg-teal-600 text-white p-2 rounded-lg transition-colors flex-shrink-0"
-                      >
-                        {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                      </button>
+                  <div className="space-y-3">
+                    <p className="text-sm font-medium text-gray-700">Código Pix copia e cola:</p>
+                    <div className="bg-gray-100 rounded-xl p-4">
+                      <p className="text-xs text-gray-600 break-all select-all leading-relaxed font-mono">
+                        {pixData.copyPaste || ''}
+                      </p>
                     </div>
+                    <button
+                      type="button"
+                      onClick={copyToClipboard}
+                      className={`w-full py-4 rounded-xl font-bold text-base transition-all flex items-center justify-center gap-3 ${
+                        copied 
+                          ? 'bg-green-500 text-white' 
+                          : 'bg-teal-500 hover:bg-teal-600 text-white active:scale-[0.98] shadow-lg'
+                      }`}
+                    >
+                      {copied ? (
+                        <>
+                          <Check className="w-5 h-5" />
+                          Código copiado!
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-5 h-5" />
+                          Copiar código PIX
+                        </>
+                      )}
+                    </button>
                   </div>
 
                   <p className="text-xs text-gray-400 text-center">
