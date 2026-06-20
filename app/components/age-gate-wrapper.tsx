@@ -130,7 +130,7 @@ export default function AgeGateWrapper({ children }: AgeGateWrapperProps) {
   // Renderização condicional estrita
   // NÃO renderizamos children antes da verificação
   if (status === 'loading') {
-    return <BlackBackground />;
+    return <ModalBackground />;
   }
 
   if (status === 'pending') {

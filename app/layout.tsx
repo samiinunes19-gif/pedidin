@@ -3,8 +3,6 @@ import { Inter, Oswald } from 'next/font/google';
 import "./globals.css";
 import AgeGateWrapper from "./components/age-gate-wrapper";
 
-export const dynamic = 'force-dynamic';
-
 const inter = Inter({ 
   subsets: ['latin'],
   variable: '--font-inter',
