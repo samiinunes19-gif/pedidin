@@ -64,9 +64,9 @@ function ProductCard({ id, name, price, discount, imageUrl, slug, compact = fals
             className="object-contain p-3"
             sizes={compact ? '140px' : '(max-width: 640px) 50vw, 180px'}
             loading={index < 4 ? 'eager' : 'lazy'}
-            placeholder="blur"
-            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUCsPZQAAAAASUVORK5CYII="
+            placeholder="empty"
             onError={() => setImgError(true)}
+            unoptimized
           />
         )}
         {discount > 0 && (
