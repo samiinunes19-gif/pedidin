@@ -1,13 +1,7 @@
 'use client';
 
-import { useState, useEffect, ReactNode } from 'react';
-import { CartProvider } from '../context/cart-context';
-import { Toaster } from 'sonner';
-
-interface AgeGateWrapperProps {
-  children: ReactNode;
-}
-
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 // Fundo com a imagem desfocada e escurecida para a verificação inicial
@@ -16,43 +10,46 @@ function ModalBackground() {
     <div className="fixed inset-0 z-[9990]">
       <Image
         src="/banner-hero.webp"
-        alt="Background"
+        alt="Bebidas geladas desfocadas"
         fill
         className="object-cover object-center brightness-50 blur-sm"
         priority
         placeholder="blur"
         blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUCsPZQAAAAASUVORK5CYII="
       />
-      <div className="absolute inset-0 bg-black/60" />
+      <div className="absolute inset-0 bg-black/80" />
     </div>
   );
 }
 
-// Modal Genérico de Acesso
 function AccessModal({ onConfirm, onDeny }: { onConfirm: () => void; onDeny: () => void }) {
   return (
     <>
       <ModalBackground />
       <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl p-8 max-w-sm w-full text-center shadow-2xl">
-          <h1 className="text-gray-900 text-lg font-semibold mb-2">
-            Verificação de Acesso
+        <div className="bg-white rounded-2xl p-8 max-w-sm w-full text-center shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-[#F7B731]" />
+          <div className="w-20 h-20 mx-auto mb-4 bg-yellow-100 rounded-full flex items-center justify-center shadow-inner">
+            <span className="text-4xl">🔞</span>
+          </div>
+          <h1 className="text-gray-900 text-2xl font-black mb-3 font-oswald uppercase tracking-wide">
+            Você tem 18 anos ou mais?
           </h1>
-          <p className="text-gray-500 text-sm mb-8">
-            Confirme que você possui 18 anos ou mais para acessar a plataforma.
+          <p className="text-gray-600 text-sm mb-8 leading-relaxed">
+            A venda e o consumo de bebidas alcoólicas são rigorosamente proibidos para menores de 18 anos. Por favor, confirme sua idade para entrar.
           </p>
-          <div className="flex gap-3">
-            <button
-              onClick={onDeny}
-              className="flex-1 py-3.5 rounded-xl border-2 border-gray-200 text-gray-600 font-semibold hover:bg-gray-50 transition-colors"
-            >
-              Não
-            </button>
+          <div className="flex flex-col gap-3">
             <button
               onClick={onConfirm}
-              className="flex-1 py-3.5 rounded-xl bg-[#F7B731] text-black font-bold hover:bg-[#e5a623] transition-colors"
+              className="w-full py-4 rounded-xl bg-[#F7B731] text-black font-bold hover:bg-[#e5a623] hover:scale-[1.02] transition-all text-lg shadow-lg active:scale-95"
             >
-              Sim, confirmar
+              Sim, tenho 18 ou mais
+            </button>
+            <button
+              onClick={onDeny}
+              className="w-full py-4 rounded-xl border-2 border-gray-200 text-gray-500 font-semibold hover:bg-gray-50 transition-all active:scale-95"
+            >
+              Não, sou menor de 18
             </button>
           </div>
         </div>
@@ -61,25 +58,27 @@ function AccessModal({ onConfirm, onDeny }: { onConfirm: () => void; onDeny: () 
   );
 }
 
-// Modal de Acesso Negado Genérico
 function DeniedModal({ onBack }: { onBack: () => void }) {
   return (
     <>
       <ModalBackground />
       <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl p-8 max-w-sm w-full text-center shadow-2xl">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-100 flex items-center justify-center">
-            <span className="text-3xl">🚫</span>
+        <div className="bg-white rounded-2xl p-8 max-w-sm w-full text-center shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-red-500" />
+          <div className="w-20 h-20 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center shadow-inner">
+            <span className="text-4xl">🚫</span>
           </div>
-          <h1 className="text-gray-900 text-xl font-bold mb-2">Acesso Restrito</h1>
-          <p className="text-gray-500 text-sm mb-6">
-            Esta plataforma requer verificação de idade para acesso.
+          <h1 className="text-gray-900 text-2xl font-black mb-3 font-oswald uppercase tracking-wide">
+            Acesso Negado
+          </h1>
+          <p className="text-gray-600 text-sm mb-8 leading-relaxed">
+            Lamentamos, mas nossa plataforma é exclusiva para maiores de idade. Volte quando completar 18 anos!
           </p>
           <button
             onClick={onBack}
-            className="text-[#F7B731] font-semibold text-sm hover:underline"
+            className="text-[#F7B731] font-bold text-sm hover:underline"
           >
-            Voltar
+            Voltar e tentar novamente
           </button>
         </div>
       </div>
@@ -87,90 +86,20 @@ function DeniedModal({ onBack }: { onBack: () => void }) {
   );
 }
 
-export default function AgeGateWrapper({ children }: AgeGateWrapperProps) {
-  const [status, setStatus] = useState<'loading' | 'pending' | 'denied' | 'verified'>('loading');
-
-  useEffect(() => {
-    const verified = localStorage.getItem('age_verified');
-    if (verified === 'true') {
-      setStatus('verified');
-      injectRealMetadata();
-    } else {
-      setStatus('pending');
-    }
-  }, []);
-
-  const injectRealMetadata = () => {
-    // Injeta as meta tags reais e remove o noindex apenas quando validado
-    document.title = "Zé Entregas Rápidas";
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute("content", "A entrega mais rápida da sua região.");
-    }
-    
-    // Remover noindex se existir
-    const robots = document.querySelector('meta[name="robots"]');
-    if (robots && robots.getAttribute('content')?.includes('noindex')) {
-      robots.setAttribute('content', 'index, follow');
-    }
-
-    // Injetar JSON-LD dinamicamente apenas após validação (escondido do Google Ads inicialmente)
-    if (!document.getElementById('json-ld-schema')) {
-      const script = document.createElement('script');
-      script.id = 'json-ld-schema';
-      script.type = 'application/ld+json';
-      script.text = JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "LiquorStore",
-        "name": "Zé Entregas Rápidas",
-        "image": "https://fazer-pedidosdelivery.shop/banner-hero.webp",
-        "url": "https://fazer-pedidosdelivery.shop",
-        "telephone": "+5511999999999",
-        "priceRange": "$$",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Rua Exemplo, 123",
-          "addressLocality": "São Paulo",
-          "addressRegion": "SP",
-          "postalCode": "01000-000",
-          "addressCountry": "BR"
-        }
-      });
-      document.head.appendChild(script);
-    }
-  };
+export default function AgeGateWrapper() {
+  const [status, setStatus] = useState<'pending' | 'denied'>('pending');
+  const router = useRouter();
 
   const handleConfirm = () => {
-    localStorage.setItem('age_verified', 'true');
-    setStatus('verified');
-    injectRealMetadata();
+    // Define cookie válido por 1 ano para liberar acesso no lado do servidor
+    document.cookie = "age_verified=true; path=/; max-age=31536000";
+    // Força o recarregamento do layout do servidor para buscar o conteúdo real
+    router.refresh();
   };
-
-  const handleDeny = () => {
-    setStatus('denied');
-  };
-
-  // Renderização condicional estrita
-  // NÃO renderizamos children antes da verificação
-  if (status === 'loading') {
-    return <ModalBackground />;
-  }
-
-  if (status === 'pending') {
-    return <AccessModal onConfirm={handleConfirm} onDeny={handleDeny} />;
-  }
 
   if (status === 'denied') {
     return <DeniedModal onBack={() => setStatus('pending')} />;
   }
 
-  // Só chega aqui (e monta o DOM real) se estiver 'verified'
-  return (
-    <div className="bg-gray-50 min-h-screen">
-      <CartProvider>
-        {children}
-        <Toaster position="top-center" richColors />
-      </CartProvider>
-    </div>
-  );
+  return <AccessModal onConfirm={handleConfirm} onDeny={() => setStatus('denied')} />;
 }
