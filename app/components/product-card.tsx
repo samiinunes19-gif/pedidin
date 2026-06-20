@@ -1,7 +1,6 @@
 'use client';
 
 import { Plus, ImageOff } from 'lucide-react';
-import Image from 'next/image';
 import { useCart } from '@/app/context/cart-context';
 import { useState, useEffect, memo } from 'react';
 
@@ -57,15 +56,20 @@ function ProductCard({ id, name, price, discount, imageUrl, slug, compact = fals
             <ImageOff className="w-8 h-8 text-gray-300" />
           </div>
         ) : (
-          <Image
+          <img
             src={imageUrl || '/placeholder.png'}
             alt={name || 'Produto'}
-            fill
-            className="object-contain p-3"
-            sizes={compact ? '140px' : '(max-width: 640px) 50vw, 180px'}
             loading={index < 4 ? 'eager' : 'lazy'}
-            placeholder="empty"
             onError={() => setImgError(true)}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              padding: '12px',
+            }}
           />
         )}
         {discount > 0 && (
@@ -128,3 +132,4 @@ function ProductCard({ id, name, price, discount, imageUrl, slug, compact = fals
 }
 
 export default memo(ProductCard);
+
