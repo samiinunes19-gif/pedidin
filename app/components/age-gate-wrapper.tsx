@@ -20,6 +20,8 @@ function ModalBackground() {
         fill
         className="object-cover object-center brightness-50 blur-sm"
         priority
+        placeholder="blur"
+        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUCsPZQAAAAASUVORK5CYII="
       />
       <div className="absolute inset-0 bg-black/60" />
     </div>

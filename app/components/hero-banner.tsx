@@ -33,6 +33,8 @@ export default function HeroBanner() {
           fill
           className="object-cover object-center"
           priority
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUCsPZQAAAAASUVORK5CYII="
         />
         
         {/* Gradiente escuro na parte inferior para texto legível */}
