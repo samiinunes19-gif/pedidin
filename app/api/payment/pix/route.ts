@@ -68,6 +68,16 @@ export async function POST(request: NextRequest) {
 
     const cleanCpf = customerCpf.replace(/\D/g, '');
 
+    const publicKey = process.env.MASTERPAG_PUBLIC_KEY || '';
+    const secretKey = process.env.MASTERPAG_SECRET_KEY || '';
+
+    if (!publicKey || publicKey === 'your_public_key_here' || !secretKey || secretKey === 'your_secret_key_here') {
+      return NextResponse.json(
+        { success: false, error: 'Chaves da MasterPag não configuradas. Configure MASTERPAG_PUBLIC_KEY e MASTERPAG_SECRET_KEY nas variáveis de ambiente da Vercel.' },
+        { status: 500 }
+      );
+    }
+
     const payload = {
       amount: Number(amount.toFixed(2)),
       paymentMethod: 'pix',
@@ -97,8 +107,8 @@ export async function POST(request: NextRequest) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-public-key': process.env.MASTERPAG_PUBLIC_KEY || '',
-          'x-secret-key': process.env.MASTERPAG_SECRET_KEY || ''
+          'x-public-key': publicKey,
+          'x-secret-key': secretKey
         },
         body: JSON.stringify(payload)
       }
@@ -107,8 +117,9 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
 
     if (!response.ok) {
+      console.error('MasterPag error:', response.status, JSON.stringify(data));
       return NextResponse.json(
-        { success: false, error: data.message || 'Erro ao gerar PIX' },
+        { success: false, error: data.message || data.error || 'Erro ao gerar PIX' },
         { status: response.status }
       );
     }
