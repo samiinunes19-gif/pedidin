@@ -1,0 +1,17 @@
+{
+  "name": "Verificação de Idade",
+  "short_name": "18+",
+  "description": "Confirme sua idade para continuar",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#F7B731",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "lang": "pt-BR"
+}
