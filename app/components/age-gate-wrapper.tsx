@@ -28,7 +28,7 @@ function AccessModal({ onConfirm, onDeny }: { onConfirm: () => void; onDeny: () 
       <ModalBackground />
       <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
         <div className="bg-white rounded-[1.5rem] p-8 max-w-sm w-full text-center shadow-2xl relative overflow-hidden pb-6">
-          <div className="w-16 h-16 mx-auto mb-5 bg-[#F8F9FA] border-2 border-gray-300 rounded-2xl flex items-center justify-center shadow-sm">
+          <div className="w-16 h-16 mx-auto mb-5 bg-[#F8F9FA] border-2 border-[#F7B731] rounded-2xl flex items-center justify-center shadow-sm">
             <span className="text-3xl font-black text-black tracking-tighter">18+</span>
           </div>
           <h1 className="text-black text-[1.5rem] leading-tight font-black mb-3 font-inter tracking-tight">
