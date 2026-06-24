@@ -37,21 +37,21 @@ function AccessModal({ onConfirm, onDeny }: { onConfirm: () => void; onDeny: () 
           <p className="text-gray-500 text-[0.95rem] mb-8 leading-relaxed px-1 font-medium">
             Em conformidade com a legislação, o acesso a esta plataforma e a compra de bebidas alcoólicas são exclusivos para adultos.
           </p>
-          <div className="flex flex-col gap-3 mb-5">
+          <div className="flex flex-col gap-3 mb-5 mt-5">
             <button
               onClick={onConfirm}
-              className="w-full py-3.5 rounded-xl bg-[#2C3E50] text-white font-bold hover:bg-[#1a252f] hover:scale-[1.02] transition-all text-base shadow-lg active:scale-95"
+              className="w-full py-3.5 rounded-xl bg-[#F7B731] text-white font-bold hover:bg-[#e5a623] hover:scale-[1.02] transition-all text-base shadow-lg active:scale-95"
             >
               Sim, sou maior de idade
             </button>
             <button
               onClick={onDeny}
-              className="w-full py-3.5 rounded-xl bg-gray-50 border border-gray-200 text-gray-500 font-bold hover:bg-gray-100 transition-all active:scale-95 text-base"
+              className="w-full py-3.5 rounded-xl border-2 border-[#F7B731] bg-white text-[#F7B731] font-bold hover:bg-gray-50 transition-all active:scale-95 text-base"
             >
               Não tenho 18 anos
             </button>
           </div>
-          <p className="text-gray-400 text-xs font-semibold">
+          <p className="text-gray-400 text-xs font-semibold mt-5">
             Beba com responsabilidade.
           </p>
         </div>
