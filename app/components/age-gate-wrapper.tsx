@@ -28,13 +28,13 @@ function AccessModal({ onConfirm, onDeny }: { onConfirm: () => void; onDeny: () 
       <ModalBackground />
       <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
         <div className="bg-white rounded-[1.5rem] p-8 max-w-sm w-full text-center shadow-2xl relative overflow-hidden pb-6">
-          <div className="w-16 h-16 mx-auto mb-5 bg-[#F8F9FA] border-2 border-gray-200 rounded-2xl flex items-center justify-center shadow-sm">
-            <span className="text-3xl font-extrabold text-[#2C3E50] tracking-tighter">18+</span>
+          <div className="w-16 h-16 mx-auto mb-5 bg-[#F8F9FA] border-2 border-gray-300 rounded-2xl flex items-center justify-center shadow-sm">
+            <span className="text-3xl font-black text-black tracking-tighter">18+</span>
           </div>
-          <h1 className="text-[#2C3E50] text-[1.4rem] leading-tight font-extrabold mb-3 font-inter tracking-tight">
+          <h1 className="text-black text-[1.5rem] leading-tight font-black mb-3 font-inter tracking-tight">
             Acesso Restrito
           </h1>
-          <p className="text-gray-500 text-[0.95rem] mb-8 leading-relaxed px-1 font-medium">
+          <p className="text-gray-800 text-[1rem] mb-8 leading-relaxed px-1 font-semibold">
             Em conformidade com a legislação, o acesso a esta plataforma e a compra de bebidas alcoólicas são exclusivos para adultos.
           </p>
           <div className="flex flex-col gap-3 mb-5 mt-5">
@@ -51,7 +51,7 @@ function AccessModal({ onConfirm, onDeny }: { onConfirm: () => void; onDeny: () 
               Não tenho 18 anos
             </button>
           </div>
-          <p className="text-gray-400 text-xs font-semibold mt-5">
+          <p className="text-gray-600 text-[0.8rem] font-bold mt-5 uppercase tracking-wider">
             Beba com responsabilidade.
           </p>
         </div>
